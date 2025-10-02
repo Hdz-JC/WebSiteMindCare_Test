@@ -1,0 +1,17 @@
+/venv
+
+# Archivos compilados de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de logs
+*.log
+
+# Configuración de editores/IDE
+.vscode/
+
+# Archivos de pruebas
+.coverage
+.pytest_cache/
