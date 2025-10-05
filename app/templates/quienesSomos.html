@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quienes somos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_quienesSomos.css') }}">
+</head>
+<body>
+    {% include 'menu.html' %}
+    <div class="content">
+        <!--<img src="{{ url_for('static', filename='img/psicologoInicio.jpg') }}">-->
+        <div class="text">
+            <h1>¿Quienes somos?</h1>
+            <p><strong>Mind Care</strong> es un espacio diseñado para acompañarte 
+            en tu proceso de autoconocimiento, sanación y crecimiento personal, 
+            comprometido con ofrecerte un entorno seguro, empático y profesional, 
+            donde puedas explorar tus pensamientos, emociones y desafíos sin juicio. 
+            <br><br>
+            Nos guiamos por valores como la confidencialidad, el respeto y la 
+            humanidad, integrando herramientas psicológicas con una experiencia 
+            digital accesible y cercana.
+            <br><br>
+            En <strong>Mind Care</strong>, tu bienestar no es solo una meta: es nuestra prioridad.</p>
+        </div>
+    </div>
+</body>
+</html>
