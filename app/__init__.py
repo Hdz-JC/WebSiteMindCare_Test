@@ -1,5 +1,5 @@
 from flask import Flask
-from app.controllers.main_routes import main_bp
+from app.controllers.public.main_routes import main_bp
 
 
 def create_app():
