@@ -7,9 +7,9 @@ main_bp = Blueprint ('main_bp',__name__)
 def inicio():
     return render_template('public/inicio.html')
 
-@main_bp.route('/citas')
+@main_bp.route('/agendar')
 def citas():
-    return render_template('public/citas.html')
+    return render_template('public/agendar.html')
 
 @main_bp.route('/quienesSomos')
 def quienesSomos():
@@ -23,4 +23,7 @@ def ubicacion():
 def login():
     return render_template('public/login.html')
 
+@main_bp.route('/registro')
+def registro():
+    return render_template('public/registro.html')
 

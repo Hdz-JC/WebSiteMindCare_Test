@@ -1,0 +1,26 @@
+.content
+{
+    margin-top: 90px;
+    display: grid;
+    place-items: center;
+}
+
+img
+{
+    margin-top: 30px;
+    width: 700px;
+    height: 320px;
+}
+
+.content h1
+{
+    font-family: "Nunito", sans-serif;
+    font-size: 50px;
+    color: #00abb5;
+}
+
+p
+{
+    font-family: "Nunito", sans-serif;
+    font-size: 20px;
+}

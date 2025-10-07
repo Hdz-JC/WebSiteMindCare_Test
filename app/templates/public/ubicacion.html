@@ -4,12 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ubicación</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!--Style-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_ubicacion.css') }}">
 </head>
 <body>
-    {% include 'public/menu.html' %}
-    <img src="{{ url_for('static', filename='img/ubicacion.jpg') }}">
-    <h1>Nos encrontramos en:</h1>
-    <p>Avenida Tecnológico s/n, Colonia Elías Calles, 21376 Mexicali, B.C.</p>
+    {% extends 'base.html' %}
+    {% block content %}
+    <div class="content">
+        <h1>Nos encrontramos en</h1>
+        <p>Avenida Tecnológico s/n, Colonia Elías Calles, 21376 Mexicali, B.C.</p>
+        <img src="{{ url_for('static', filename='img/ubicacion.jpg') }}">
+    </div>
+    {% endblock %}
+    {% include 'public/login.html' %}
 </body>
+
 </html>
