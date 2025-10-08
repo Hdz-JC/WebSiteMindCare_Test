@@ -1,13 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
+
+{% block title %} Registro {% endblock %}
+
+{% block style %}
     <!--Style-->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_registro.css') }}">
-</head>
-<body>
-    {% extends 'base.html' %}
-</body>
-</html>
+{% endblock %}
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Datos del paciente</h1>
+    
+    <form>
+        <p>Datos personales</p>
+        <input type="text" id="paterno" placeholder="Apellido paterno">
+        <input type="text" id="materno" placeholder="Apellido materno">
+        <input type="text" id="nombre" placeholder="Nombre (s)">
+        <input type="number" id="edad" placeholder="edad">
+        <br><br>
+        
+        <p>Sexo</p>
+        <input type="radio" id="femenino" name="sexo" value="F">
+        <label for="femenino">F</label>
+
+        <input type="radio" id="masculino" name="sexo" value="M">
+        <label for="masculino">M</label>
+
+        <br><br>
+        <p>Datos de contacto</p>
+        <input type="text" id="direccion" placeholder="Direccion">
+        <input type="number" id="telefono" placeholder="Telefono celular">
+        <input type="email" id="correo" placeholder="correo electronico">
+
+        <br><br>
+        <button type="button">Cancelar</button>
+        <button type="submit">Aceptar</button>
+
+    </form>
+{% endblock %}

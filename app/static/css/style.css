@@ -1,42 +1,43 @@
 body
 {
     background-color: #f5f5f5;
-    margin-top: 70px;
-}
-
-nav
-{
-    display: flex;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #00abb5;
 }
 
 .logo img
 {
     height: 60px;
     width: 200px;
-    margin: 5px 20px;
-    margin-right: 400px;
+    margin: 5px
 }
 
-nav ul
-{
-    list-style: none;
-    padding: 8px;
-    display: flex;
-    gap: 20px;
-}
-
-nav ul li a
+.collapse
 {
     justify-content: flex-end;
+}
+
+.container-fluid
+{
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    background-color: #00abb5;
+    height: 80px;
+}
+
+.nav-link
+{
     font-family: "Nunito", sans-serif;
     color: white;
     text-decoration: none;
     font-weight: bold;
     font-size: 18px;
     margin-right: 25px;
+}
+
+.nav-link:hover 
+{
+  cursor: pointer;
 }

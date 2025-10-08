@@ -6,32 +6,31 @@
 
 .text
 {
-    margin-top: 290px;
+    margin-top: 100px;
 }
 
 img
 {
-    margin: 70px;
-    margin-top: 90px;
-    width: 700px;
+    margin-top: 100px;
+    margin-left: 15%;
+    margin-right: 70px;
+    width: 400px;
+    height: 500px;
 }
 
-h1
+.content h1
 {
-    margin: 0;
-    margin-top: -330px;
     font-family: "Nunito", sans-serif;
-    font-size: 60px;
+    font-size: 50px;
     color: #00abb5;
 }
 
 p
 {
-    margin: 0;
     margin-top: 20px;
     font-family: "Nunito", sans-serif;
     font-size: 20px;
-    width: 440px;
+    width: 490px;
     text-align: justify;
 }
 
