@@ -9,32 +9,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Datos del paciente</h1>
-    
-    <form>
-        <p>Datos personales</p>
-        <input type="text" id="paterno" placeholder="Apellido paterno">
-        <input type="text" id="materno" placeholder="Apellido materno">
-        <input type="text" id="nombre" placeholder="Nombre (s)">
-        <input type="number" id="edad" placeholder="edad">
-        <br><br>
-        
-        <p>Sexo</p>
-        <input type="radio" id="femenino" name="sexo" value="F">
-        <label for="femenino">F</label>
-
-        <input type="radio" id="masculino" name="sexo" value="M">
-        <label for="masculino">M</label>
-
-        <br><br>
-        <p>Datos de contacto</p>
-        <input type="text" id="direccion" placeholder="Direccion">
-        <input type="number" id="telefono" placeholder="Telefono celular">
-        <input type="email" id="correo" placeholder="correo electronico">
-
-        <br><br>
-        <button type="button">Cancelar</button>
-        <button type="submit">Aceptar</button>
-
+    <form class="formulario">
+        <h2>Datos del paciente</h2>
+        <fieldset id="datosPersonales">
+            <legend>Datos personales</legend>
+            <div class="fila">
+                <input type="text" placeholder="Apellido paterno">
+                <input type="text" placeholder="Apellido materno">
+            </div>
+            <div class="fila">
+                <input type="text" placeholder="Nombre(s)">
+                <input type="number" placeholder="Edad">
+                <input type="date" placeholder="Fecha de nacimiento">
+            </div>
+            <div class="fila">
+                <label>Sexo:</label>
+                <label><input type="radio" name="sexo" value="F"> F</label>
+                <label><input type="radio" name="sexo" value="M"> M</label>
+            </div>
+        </fieldset>
+        <fieldset id="datosContacto">
+            <legend>Datos de contacto</legend>
+            <input type="text" placeholder="Dirección">
+            <input type="tel" placeholder="Teléfono celular">
+            <input type="email" placeholder="Correo electrónico">
+        </fieldset>
+        <div class="botones">
+            <button type="button">Cancelar</button>
+            <button type="submit">Aceptar</button>
+        </div>
     </form>
 {% endblock %}

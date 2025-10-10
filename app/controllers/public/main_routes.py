@@ -26,4 +26,3 @@ def login():
 @main_bp.route('/registro')
 def registro():
     return render_template('public/registro.html')
-

@@ -1,4 +1,91 @@
-h1
+body
 {
-    margin-top: 150px;
+    font-family: "Nunito", sans-serif;
+}
+
+.formulario 
+{
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+h2 
+{
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 65px;
+  font-size: 45px;
+  color: #00abb5;
+}
+
+#datosPersonales 
+{
+  background-color: #f0f8ff;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+#datosContacto
+{
+  background-color: #fff8f0;
+  border-radius: 8px;
+}
+
+legend 
+{
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.fila 
+{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="tel"],
+input[type="email"] 
+{
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.fila label 
+{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.botones 
+{
+  display: flex;
+  justify-content: center;
+  gap: 120px;
+  margin-top: 35px;
+}
+
+button 
+{
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #00abb5;
+  color: white;
+  cursor: pointer;
+}
+
+button[type="button"] 
+{
+  background-color: #6c757d;
 }
