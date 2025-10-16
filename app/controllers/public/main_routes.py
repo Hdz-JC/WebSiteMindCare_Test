@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+#from app.models.user_model import session, User, create_user
 
 main_bp = Blueprint ('main_bp',__name__)
 
@@ -22,6 +23,8 @@ def ubicacion():
 @main_bp.route('/login')
 def login():
     return render_template('public/login.html')
+
+#Todo el show
 
 @main_bp.route('/registro')
 def registro():

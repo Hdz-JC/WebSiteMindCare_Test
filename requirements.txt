@@ -1,0 +1,16 @@
+# --- Core de Flask ---
+Flask==3.0.3
+
+# --- Base de datos ---
+Flask-SQLAlchemy==3.1.1
+psycopg2-binary==2.9.9
+
+# --- Migraciones (para mantener tu schema fácilmente) ---
+Flask-Migrate==4.0.7
+
+# --- Utilidades opcionales comunes ---
+python-dotenv==1.0.1   # para leer variables de entorno (.env)
+
+# --- (Opcional, si usas peticiones HTTP) ---
+requests==2.32.3
+    

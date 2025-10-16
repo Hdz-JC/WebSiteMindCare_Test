@@ -15,3 +15,5 @@ __pycache__/
 # Archivos de pruebas
 .coverage
 .pytest_cache/
+
+postgres_data/
