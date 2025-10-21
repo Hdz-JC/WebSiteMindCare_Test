@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-#from app.models.user_model import session, User, create_user
+from flask import Blueprint, render_template, request, redirect, url_for, flash,session
+from app.models.user_model import User, db
 
 main_bp = Blueprint ('main_bp',__name__)
 
@@ -20,9 +20,25 @@ def quienesSomos():
 def ubicacion():
     return render_template('public/ubicacion.html')
 
-@main_bp.route('/login')
+@main_bp.route('/login', methods=['GET','POST'])
 def login():
-    return render_template('public/login.html')
+
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        user = User.query.filter_by(email=email, password=password).first()
+
+        if user:
+            session['user_id'] = user.id
+            session['user_email'] = user.email
+            flash('Inicio de sesion exitoso', 'Success')
+            return redirect(url_for('main_bp.inicio'))
+        else:
+            flash('Correo o password incorrectos','danger')
+            return redirect(url_for('main_bp.ubicacion'))
+
+    #return render_template('components/login_modal.html')
 
 #Todo el show
 
