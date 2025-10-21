@@ -16,13 +16,11 @@
             <div class="fila">
                 <input type="text" name="paterno" placeholder="Apellido paterno">
                 <input type="text" name="materno" placeholder="Apellido materno">
-            </div>
-            <div class="fila">
                 <input type="text" name="nombre" placeholder="Nombre(s)">
-                <input type="number" name="edad" placeholder="Edad">
-                <input type="date" name="fecha_nacimiento" placeholder="Fecha de nacimiento">
             </div>
             <div class="fila">
+                <input type="text" name="edad" placeholder="Edad">
+                <input type="date" name="fecha_nacimiento" placeholder="Fecha de nacimiento">
                 <label>Sexo:</label>
                 <label><input type="radio" name="sexo" value="F"> F</label>
                 <label><input type="radio" name="sexo" value="M"> M</label>
@@ -30,9 +28,17 @@
         </fieldset>
         <fieldset id="datosContacto">
             <legend>Datos de contacto</legend>
-            <input type="text" name="direccion" placeholder="Dirección">
-            <input type="tel" name="celular" placeholder="Teléfono celular">
-            <input type="email" name="email" placeholder="Correo electrónico">
+            <div class="fila">
+                <input type="text" name="direccion" placeholder="Dirección">
+                <input type="tel" name="celular" placeholder="Teléfono celular">
+            </div>
+        </fieldset>
+        <fieldset id="datosCuenta">
+            <legend>Datos de cuenta</legend>
+            <div class="fila">
+                <input type="email" name="email" placeholder="Correo electrónico">
+                <input type="password" name="password" placeholder="Contraseña">
+            </div>
         </fieldset>
         <div class="botones">
             <button type="button">Cancelar</button>
