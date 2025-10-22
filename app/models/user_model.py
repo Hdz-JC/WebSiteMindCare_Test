@@ -13,7 +13,7 @@ class User(db.Model):
   direccion = db.Column(db.String(60), nullable=True)
   celular = db.Column(db.String(10), nullable=True)
   email = db.Column(db.String(254), unique=True, nullable=False)
-  password = db.Column(db.String(8), nullable=False)
+  password = db.Column(db.String(128), nullable=False)
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
   @staticmethod
