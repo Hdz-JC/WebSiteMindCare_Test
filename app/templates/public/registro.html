@@ -1,42 +1,47 @@
+{% extends 'base.html' %}
 
 {% block title %} Registro {% endblock %}
 
 {% block style %}
-    <!--Style-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_registro.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style_registro.css') }}">
 {% endblock %}
 
-{% extends 'base.html' %}
-
 {% block content %}
-    <form class="formulario">
-        <h2>Datos del paciente</h2>
-        <fieldset id="datosPersonales">
-            <legend>Datos personales</legend>
-            <div class="fila">
-                <input type="text" name="paterno" placeholder="Apellido paterno">
-                <input type="text" name="materno" placeholder="Apellido materno">
-            </div>
-            <div class="fila">
-                <input type="text" name="nombre" placeholder="Nombre(s)">
-                <input type="number" name="edad" placeholder="Edad">
-                <input type="date" name="fecha_nacimiento" placeholder="Fecha de nacimiento">
-            </div>
-            <div class="fila">
-                <label>Sexo:</label>
-                <label><input type="radio" name="sexo" value="F"> F</label>
-                <label><input type="radio" name="sexo" value="M"> M</label>
-            </div>
-        </fieldset>
-        <fieldset id="datosContacto">
-            <legend>Datos de contacto</legend>
-            <input type="text" name="direccion" placeholder="Dirección">
-            <input type="tel" name="celular" placeholder="Teléfono celular">
-            <input type="email" name="email" placeholder="Correo electrónico">
-        </fieldset>
-        <div class="botones">
-            <button type="button">Cancelar</button>
-            <button type="submit">Aceptar</button>
+<form class="formulario" 
+      action="{{ url_for('main_bp.registro') }}" 
+      method="POST">
+
+    <h2>Datos del paciente</h2>
+
+    <fieldset id="datosPersonales">
+        <legend>Datos personales</legend>
+        <div class="fila">
+            <input type="text" name="paterno" placeholder="Apellido paterno" required>
+            <input type="text" name="materno" placeholder="Apellido materno">
         </div>
-    </form>
+        <div class="fila">
+            <input type="text" name="nombre" placeholder="Nombre(s)" required>
+            <input type="number" name="edad" placeholder="Edad" min="1" max="120" required>
+            <input type="date" name="fecha_nacimiento" placeholder="Fecha de nacimiento">
+        </div>
+        <div class="fila">
+            <label>Sexo:</label>
+            <label><input type="radio" name="sexo" value="F" required> F</label>
+            <label><input type="radio" name="sexo" value="M"> M</label>
+        </div>
+    </fieldset>
+
+    <fieldset id="datosContacto">
+        <legend>Datos de contacto</legend>
+        <input type="text" name="direccion" placeholder="Dirección">
+        <input type="tel" name="celular" placeholder="Teléfono celular">
+        <input type="email" name="email" placeholder="Correo electrónico" required>
+        <input type="password" name="password" placeholder="Contraseña" required>
+    </fieldset>
+
+    <div class="botones">
+        <button type="reset">Cancelar</button>
+        <button type="submit">Aceptar</button>
+    </div>
+</form>
 {% endblock %}
