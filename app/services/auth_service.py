@@ -18,9 +18,16 @@ def register_user(paterno, materno, nombre, fecha_nacimiento, sexo,
         - User: si se creó correctamente
         - None: si el email ya estaba registrado
     """
-    # Verificar si el correo ya existe
+    errores = []
+
     if User.query.filter_by(email=email).first():
-        return None
+        errores.append("email")
+
+    if celular and User.query.filter_by(celular=celular).first():
+        errores.append("celular")
+
+    if errores:
+        return None, errores
 
     # Crear el usuario
     user = User(
@@ -38,4 +45,4 @@ def register_user(paterno, materno, nombre, fecha_nacimiento, sexo,
     # Guardar en la base de datos
     db.session.add(user)
     db.session.commit()
-    return user
+    return user, None

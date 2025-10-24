@@ -17,7 +17,7 @@
                     </div>
                     <div class="mb-3">
                         <span>¿No tienes una cuenta?</span>
-                        <a href="{{ url_for('main_bp.registro') }}" target="_blank" class="text-primary fw-bold">Regístrate</a>
+                        <a href="{{ url_for('main_bp.registro') }}" class="text-primary fw-bold">Regístrate</a>
                     </div>
                     <div class="text-center">
                     <button type="submit" class="btn btn-primary">Aceptar</button>
@@ -40,7 +40,7 @@ function validarLogin() {
     Swal.fire("Correo inválido", "Por favor ingresa un correo electrónico válido.", "error");
     return false; // Evita que el formulario se envíe
   }
-     
+  
   return true; // Si todo es válido, permite el envío
 }
 </script>

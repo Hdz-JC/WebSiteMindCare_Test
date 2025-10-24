@@ -1,3 +1,4 @@
+from os import error
 from flask import Blueprint, render_template, request, redirect, url_for, flash,session
 from flask_migrate import show
 from app.services.auth_service import authenticate_user,register_user
@@ -75,7 +76,7 @@ def registro():
             role=RoleEnum.paciente
 
             # Llamar al service
-            user = register_user(
+            user, errores = register_user(
                 paterno=paterno,
                 materno=materno,
                 nombre=nombre,
@@ -88,17 +89,21 @@ def registro():
             )
 
             if not user:
-                flash('El correo ya está registrado.', 'warning')
-                return render_template('public/registro.html')
-                            
-
+                for e in errores:
+                    if e == "email":
+                        flash("El correo ya está registrado.", "warning")
+                    elif e == "celular":
+                        flash("El número de celular ya está registrado.", "warning")
+                return render_template("public/registro.html")
             flash('Registro exitoso. Ahora puedes iniciar sesión.', 'success')
             return redirect(url_for('main_bp.inicio'))
-
+       
+       
         except Exception as e:
             from app.models import db
             db.session.rollback()
-            flash(f'Error al registrar usuario: {str(e)}', 'danger')
+            flash(f'Error al registrar usuario', 'danger')
+            print({str(e)})
             return render_template('public/registro.html')
 
     # GET → renderiza el formulario
