@@ -3,6 +3,7 @@ from flask_migrate import show
 from app.services.auth_service import authenticate_user,register_user
 from datetime import datetime
 
+
 main_bp = Blueprint ('main_bp',__name__)
 
 #Rutas para archivos principales
@@ -11,7 +12,7 @@ def inicio():
     return render_template('public/inicio.html')
 
 @main_bp.route('/agendar')
-def citas():
+def agendar():
     return render_template('public/agendar.html')
 
 @main_bp.route('/quienesSomos')
@@ -34,20 +35,31 @@ def login():
         if user:
             session['user_id'] = user.id
             session['user_email'] = user.email
+            session['user_nombre'] = f"{user.nombre}"
             flash('Inicio de sesion exitoso', 'Success')
             return redirect(url_for('main_bp.inicio'))
         else:
             flash('Correo o password incorrectos','danger')
-            return redirect(url_for('main_bp.inicio', show_login_modal=True))
+            return render_template('public/inicio.html', email='', password='')
 
 
    # return render_template('components/login_modal.html')
 
 #Todo el show
+@main_bp.route('/logout')
+def logout():
+    session.clear()
+    flash('Sesión cerrada correctamente', 'success')
+    return redirect(url_for('main_bp.inicio'))
+
 
 @main_bp.route('/registro', methods=['GET', 'POST'])
 def registro():
+    from app.models.user_model import RoleEnum
+    
     if request.method == 'POST':
+        email = request.form['email']
+        
         try:
             # Captura de datos del formulario
             paterno = request.form['paterno']
@@ -60,13 +72,7 @@ def registro():
             celular = request.form.get('celular')
             email = request.form['email']
             password = request.form['password']
-
-            # Si solo enviaron la edad y no fecha, calculamos fecha_nacimiento
-            if edad and not fecha_nacimiento:
-                from datetime import datetime
-                fecha_nacimiento = datetime.now().date().replace(
-                    year=datetime.now().year - int(edad)
-                )
+            role=RoleEnum.paciente
 
             # Llamar al service
             user = register_user(
@@ -83,13 +89,14 @@ def registro():
 
             if not user:
                 flash('El correo ya está registrado.', 'warning')
-                return redirect(url_for('main_bp.inicio', show_login_modal=True))
+                return render_template('public/registro.html')
+                            
 
             flash('Registro exitoso. Ahora puedes iniciar sesión.', 'success')
             return redirect(url_for('main_bp.inicio'))
 
         except Exception as e:
-            from app import db
+            from app.models import db
             db.session.rollback()
             flash(f'Error al registrar usuario: {str(e)}', 'danger')
             return render_template('public/registro.html')

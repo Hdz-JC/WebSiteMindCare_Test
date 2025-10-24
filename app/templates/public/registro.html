@@ -9,7 +9,8 @@
 {% block content %}
 <form class="formulario" 
       action="{{ url_for('main_bp.registro') }}" 
-      method="POST">
+      method="POST"
+      onsubmit="validarRegistro()">
 
     <h2>Datos del paciente</h2>
 
@@ -45,3 +46,59 @@
     </div>
 </form>
 {% endblock %}
+
+<script>
+function validarRegistro() {
+  const paterno = document.querySelector('input[name="paterno"]').value.trim();
+  const materno = document.querySelector('input[name="materno"]').value.trim();
+  const nombre = document.querySelector('input[name="nombre"]').value.trim();
+  const edad = document.querySelector('input[name="edad"]').value.trim();
+  const celular = document.querySelector('input[name="celular"]').value.trim();
+  const email = document.querySelector('input[name="email"]').value.trim();
+  const password = document.querySelector('input[name="password"]').value.trim();
+
+  const nombreRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{2,30}$/;
+  const edadRegex = /^(?:[1-9][0-9]?|1[01][0-9]|120)$/;
+  const celularRegex = /^\d{10}$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+
+  if (!nombreRegex.test(paterno)) {
+    Swal.fire("Error", "Apellido paterno inválido (solo letras y espacios).", "error");
+    return false;
+  }
+
+  if (materno && !nombreRegex.test(materno)) {
+    Swal.fire("Error", "Apellido materno inválido.", "error");
+    return false;
+  }
+
+  if (!nombreRegex.test(nombre)) {
+    Swal.fire("Error", "Nombre inválido (solo letras y espacios).", "error");
+    return false;
+  }
+
+  if (!edadRegex.test(edad)) {
+    Swal.fire("Error", "Edad inválida (1-120).", "error");
+    return false;
+  }
+
+  if (celular && !celularRegex.test(celular)) {
+    Swal.fire("Error", "Teléfono celular debe tener 10 dígitos numéricos.", "error");
+    return false;
+  }
+
+  if (!emailRegex.test(email)) {
+    Swal.fire("Error", "Correo electrónico inválido.", "error");
+    return false;
+  }
+
+  if (!passwordRegex.test(password)) {
+    Swal.fire("Error", "La contraseña debe tener al menos 6 caracteres, con letras y números.", "error");
+    return false;
+  }
+
+  return true;
+}
+</script>
+

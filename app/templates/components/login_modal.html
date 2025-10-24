@@ -6,7 +6,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="{{ url_for('main_bp.login') }}">
+                    <form method="POST" onsubmit="return validarLogin()" action="{{ url_for('main_bp.login') }}">
                     <div class="mb-3">
                         <label for="email" class="form-label">Correo</label>
                         <input type="text" class="form-control" id="email" name="email" required>
@@ -27,3 +27,22 @@
             </div>
         </div>
 </div>
+
+<script>
+function validarLogin() {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+
+  if (!emailRegex.test(email)) {
+    Swal.fire("Correo inválido", "Por favor ingresa un correo electrónico válido.", "error");
+    return false; // Evita que el formulario se envíe
+  }
+     
+  return true; // Si todo es válido, permite el envío
+}
+</script>
+
+

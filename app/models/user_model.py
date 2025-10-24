@@ -1,5 +1,12 @@
 from app.models import db
 from datetime import datetime
+from sqlalchemy import Enum
+import enum
+
+class RoleEnum(enum.Enum):
+    paciente = "paciente"
+    psicologo = "psicologo"
+    general = "general"
 
 class User(db.Model):
     __tablename__ = 'usuarios'
@@ -13,6 +20,7 @@ class User(db.Model):
     celular = db.Column(db.String(10), nullable=True)
     email = db.Column(db.String(254), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
+    role = db.Column(db.Enum(RoleEnum), default=RoleEnum.paciente, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
