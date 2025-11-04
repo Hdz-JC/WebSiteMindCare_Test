@@ -1,0 +1,132 @@
+body
+{
+    font-family: "Nunito", sans-serif;
+}
+
+.back
+{
+  margin-top: 30px;
+  margin-left: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 220px;
+}
+
+.back a 
+{
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #000;
+  font-size: 20px;
+}
+
+img
+{
+  width: 12px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+h1
+{
+  text-align: center;
+  font-size: 40px;
+  color: #00abb5;
+}
+
+#calendar 
+{
+  max-width: 970px;
+  margin-left: 190px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid #5d6e7d;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+}
+
+.fc-timegrid-slot
+{
+  min-height: 60px !important;
+  height: 60px !important;
+}
+
+.fc-day-today
+{
+  background-color: #a4fde7 !important;
+}
+
+/*Estilo para las horas*/
+.fc-timegrid-slot-label
+{
+  color: #00abb5;
+  font-size: 16px !important;
+  padding: 5px !important;
+}
+
+/*Estilo para el día/mes/año*/
+.fc-toolbar-title
+{
+  text-transform: capitalize;
+}
+
+/*Estilo para los días*/
+.fc-col-header-cell-cushion
+{
+  color: #00abb5;
+  font-size: 16px !important;
+  text-transform: capitalize;
+  text-decoration: none !important;
+}
+
+/*Leyendas para días*/
+.leyendas
+{
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  width: 180px;
+  margin-top: 30px;
+}
+
+.leyenda-item
+{
+  display: flex;
+  align-items: center;
+}
+
+.cuadro
+{
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.disponible .cuadro
+{
+  background-color: #ffffff;
+}
+
+.ocupado .cuadro
+{
+  background-color: #8fd3f4;
+}
+
+.inhabil .cuadro
+{
+  background-color: #d3d3d3;
+}
+
+.hoy .cuadro
+{
+  background-color: #a4fde7;
+}
