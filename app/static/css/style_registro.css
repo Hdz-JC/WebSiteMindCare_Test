@@ -15,22 +15,26 @@ body
 h2 
 {
   text-align: center;
-  margin-bottom: 20px;
-  margin-top: 65px;
+  margin-bottom: 5px;
+  margin-top: 40px;
   font-size: 45px;
   color: #00abb5;
 }
 
 #datosPersonales 
 {
-  background-color: #f0f8ff;
   border-radius: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 
 #datosContacto
 {
-  background-color: #fff8f0;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+#datosCuenta
+{
   border-radius: 8px;
 }
 
@@ -38,6 +42,7 @@ legend
 {
   font-weight: bold;
   margin-bottom: 10px;
+  margin-left: 65px;
 }
 
 .fila 
@@ -46,13 +51,15 @@ legend
   flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 15px;
+  margin-left: 65px;
+  width: 800px;
 }
 
 input[type="text"],
-input[type="number"],
 input[type="date"],
 input[type="tel"],
-input[type="email"] 
+input[type="email"],
+input[type="password"]
 {
   flex: 1;
   padding: 8px;
@@ -72,7 +79,7 @@ input[type="email"]
   display: flex;
   justify-content: center;
   gap: 120px;
-  margin-top: 35px;
+  margin-top: 15px;
 }
 
 button 

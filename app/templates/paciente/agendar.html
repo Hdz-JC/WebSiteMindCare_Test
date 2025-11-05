@@ -1,0 +1,42 @@
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css"> -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+<script src="{{ url_for('static', filename='js/paciente/agendar.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+{% block style %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/paciente/style_inicio_paciente.css') }}">
+{% endblock%}
+
+{% block title %} Inicio {% endblock %}
+
+  {% extends 'base.html' %}
+
+  {% block content %}
+  <input type="hidden" id="user_id" value="{{ user.id }}">
+
+  <div class="back">
+    <a href="{{ url_for('user_bp.inicio') }}">
+      <img src="{{ url_for('static', filename='img/back.png') }}">
+      <span>Regresar</span>
+    </a>
+    <h1>¿Que día te gustaría agendar?</h1>
+    <div class="leyendas">
+      <div class="leyenda-item disponible">
+        <span class="cuadro"></span> Lugar disponible
+      </div>
+      <div class="leyenda-item ocupado">
+        <span class="cuadro"></span> Lugar ocupado
+      </div>
+      <div class="leyenda-item inhabil">
+        <span class="cuadro"></span> Día inhabil
+      </div>
+      <div class="leyenda-item hoy">
+        <span class="cuadro"></span> Día de noy
+      </div>
+    </div>
+  </div>
+
+  <div id='calendar'></div>
+{% endblock %}

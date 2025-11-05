@@ -6,7 +6,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" onsubmit="return validarLogin()" action="{{ url_for('main_bp.login') }}">
+                    <form method="POST" action="{{ url_for('user_bp.login') }}">
                     <div class="mb-3">
                         <label for="email" class="form-label">Correo</label>
                         <input type="text" class="form-control" id="email" name="email" required>
@@ -17,7 +17,7 @@
                     </div>
                     <div class="mb-3">
                         <span>¿No tienes una cuenta?</span>
-                        <a href="{{ url_for('main_bp.registro') }}" class="text-primary fw-bold">Regístrate</a>
+                        <a href="{{ url_for('user_bp.registro') }}" class="text-primary fw-bold">Regístrate</a>
                     </div>
                     <div class="text-center">
                     <button type="submit" class="btn btn-primary">Aceptar</button>

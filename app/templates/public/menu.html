@@ -8,7 +8,7 @@
   <div class="container-fluid">
     <!-- Logo -->
     <div class="logo">
-      <a href="{{ url_for('main_bp.inicio') }}">
+      <a href="{{ url_for('user_bp.inicio') }}">
         <img src="{{ url_for('static', filename='img/logoApp.png') }}">
       </a>
     </div>
@@ -18,23 +18,20 @@
       <ul class="navbar-nav ms-auto">
 
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('main_bp.inicio') }}">Inicio</a>
+          <a class="nav-link" href="{{ url_for('user_bp.inicio') }}">Inicio</a>
         </li>
 
         <li class="nav-item">
-          {% if session.get('user_id') %}
-            <a class="nav-link" href="{{ url_for('main_bp.agendar') }}">Agendar</a>
-          {% else %}
-            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#loginModal">Agendar</a>
-          {% endif %}
+          <a class="nav-link" href="{{ url_for('user_bp.agendar') }}">Agendar</a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('user_bp.quienesSomos') }}">Quiénes somos</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('main_bp.quienesSomos') }}">Quiénes somos</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('main_bp.ubicacion') }}">Ubicación</a>
+          <a class="nav-link" href="{{ url_for('user_bp.ubicacion') }}">Ubicación</a>
         </li>
 
         <!-- Login / Usuario -->
@@ -48,7 +45,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
               <li><h6 class="dropdown-header">{{ session.get('user_email') }}</h6></li>
-              <li><a class="dropdown-item text-danger" href="{{ url_for('main_bp.logout') }}">
+              <li><a class="dropdown-item text-danger" href="{{ url_for('user_bp.logout') }}">
                 <i class="bi bi-box-arrow-right me-1"></i> Cerrar sesión
               </a></li>
             </ul>
