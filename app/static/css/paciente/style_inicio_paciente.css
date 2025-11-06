@@ -49,11 +49,16 @@ h1
 
 #calendar 
 {
-  /*max-width: 970px;*/
+  /*max-width: 970px;
 
   max-width: 100%;
   margin: 2rem auto;
+  padding: 1rem;*/
+
+  margin: 0 auto;
   padding: 1rem;
+  max-width: 970px;
+  width: 90%;
 
   /*margin-left: 190px;
   margin-top: 20px;
