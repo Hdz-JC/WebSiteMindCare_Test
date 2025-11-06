@@ -1,19 +1,30 @@
 from app.models.citas_model import Cita
+from app.models.user_model import User
 from app.models import db
 from app.services.citas_service_interface import CitaService
-from datetime import date
+from datetime import date,datetime
 
 class CitaServiceImpl(CitaService):
     
     def agendar_cita(self, data):
-        PSICOLOGO_ID = 3
         try:
+            psicologo = User.query.filter_by(rol='psicologo').first()
+            hoy = date.today()
+            fecha_cita = datetime.strptime(data["fecha"], "%Y-%m-%d").date()
+
+            # Si la cita es hoy, cambia estado a 'aceptada', si no, 'pendiente'
+            estado_cita = "aceptada" if fecha_cita == hoy else "pendiente"
+
+            if not psicologo:
+                return {"error": "No hay psicólogo registrado en el sistema"}
+
             nueva_cita = Cita(
                 fkidusuario=data["fkidusuario"],
-                fkidpsicologo=PSICOLOGO_ID,
+                fkidpsicologo=psicologo.id,
                 fecha=data["fecha"],
                 horainicio=data["horainicio"],
                 horafin=data["horafin"],
+                estado=estado_cita,
                 descripcioncancelado=data.get("descripcioncancelado")
             )
 

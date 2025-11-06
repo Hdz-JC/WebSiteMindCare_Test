@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', async function () {
   const calendarEl = document.getElementById('calendar');
 
-  // Obtenemos la fecha actual
+  // ID del usuario logueado (inyectado desde backend, por ejemplo en un script)
+  const userId = parseInt(document.getElementById('user_id').value, 10);
+
+  // Fecha actual
   const hoy = new Date();
   const hoyISO = hoy.toISOString().split('T')[0];
 
@@ -9,18 +12,44 @@ document.addEventListener('DOMContentLoaded', async function () {
   const citasResponse = await fetch('/api/citas/listar');
   const citas = await citasResponse.json();
 
-  // Convertir citas en eventos para el calendario
-  const eventos = citas.map(c => ({
-    title: c.estado === 'aceptada' ? 'Ocupado' : 'Pendiente',
+  function getClaseCita(cita) {
+  // Si no es del usuario logeado, mostrar como ocupada (azul)
+  if (cita.fkidusuario !== userId) {
+    return 'cita-ocupada';
+  }
+
+  else if(cita.fkidusuario === userId){
+    // Si es del usuario logeado, mostrar según estado
+    switch (cita.estado) {
+      case 'pendiente':
+        return 'cita-pendiente';
+      case 'aceptada':
+        return 'cita-aceptada';
+      case 'cancelada':
+        return 'cita-cancelada';
+      default:
+        return '';
+    }
+  }
+}
+
+
+// Convertir citas en eventos para el calendario
+const eventos = citas.map(c => {
+  const esDelUsuario = c.fkidusuario === userId;
+
+  return {
+    title: esDelUsuario
+      ? c.estado.charAt(0).toUpperCase() + c.estado.slice(1)  // Pendiente / Aceptada / Cancelada
+      : 'Ocupado', // 👈 Para otros usuarios, siempre muestra “Ocupado”
     start: `${c.fecha}T${c.horainicio}`,
     end: `${c.fecha}T${c.horafin}`,
-    backgroundColor:
-      c.estado === 'aceptada' ? '#e74c3c' : '#f1c40f',
-    borderColor:
-      c.estado === 'aceptada' ? '#e74c3c' : '#f1c40f',
+    classNames: [getClaseCita(c)],
     editable: false
-  }));
+  };
+});
 
+  // Inicializar el calendario
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'timeGridWeek',
     locale: 'es',
@@ -38,19 +67,17 @@ document.addEventListener('DOMContentLoaded', async function () {
     buttonText: { today: 'Hoy' },
     events: eventos,
 
-    // Deshabilitar días pasados
-    validRange: { start: hoyISO },
+    validRange: { start: hoyISO }, // No permite días pasados
 
-    // Colorear sábados y domingos como inhábiles
     dayCellDidMount: function (info) {
       const day = info.date.getDay();
       const isToday = info.date.toDateString() === hoy.toDateString();
 
       if (day === 0 || day === 6) {
-        info.el.style.backgroundColor = '#bdc3c7'; // gris (inhábil)
+        info.el.style.backgroundColor = '#bdc3c7'; // inhábil
       }
       if (isToday) {
-        info.el.style.backgroundColor = '#3498db'; // azul (día de hoy)
+        info.el.style.backgroundColor = '#A4FDE7'; // color del día actual
       }
     },
 
@@ -59,32 +86,41 @@ document.addEventListener('DOMContentLoaded', async function () {
       const horaInicio = info.date.toLocaleTimeString('en-GB', {
         hour: '2-digit', minute: '2-digit', second: '2-digit'
       });
-
       const horaFinObj = new Date(info.date.getTime() + 60 * 60 * 1000);
       const horaFin = horaFinObj.toLocaleTimeString('en-GB', {
         hour: '2-digit', minute: '2-digit', second: '2-digit'
       });
 
-      // No permitir sábados ni domingos
+      // Validaciones
       const dia = info.date.getDay();
       if (dia === 0 || dia === 6) {
         Swal.fire('Día inhábil', 'No puedes agendar en fines de semana.', 'warning');
         return;
       }
 
-      // No permitir días pasados
-      if (info.date < hoy) {
+      const fechaClick = new Date(fecha);
+      if (fechaClick < new Date(hoyISO)) {
         Swal.fire('Fecha inválida', 'No puedes agendar en días pasados.', 'error');
         return;
       }
 
-      // Mostrar confirmación
+      const ahora = new Date();
+      if (fecha === hoyISO && info.date < ahora) {
+        Swal.fire('Hora inválida', 'No puedes agendar en una hora pasada de hoy.', 'error');
+        return;
+      }
+
+      // Obtener psicólogo real
+      const psicologoResponse = await fetch('/api/psicologo');
+      const psicologo = await psicologoResponse.json();
+
+      // Confirmar cita
       const result = await Swal.fire({
         title: '¿Agendar cita?',
         html: `
           <p><b>Fecha:</b> ${fecha}</p>
           <p><b>Hora:</b> ${horaInicio} - ${horaFin}</p>
-          <p><b>Psicólogo:</b> Predeterminado</p>
+          <p><b>Psicólogo:</b> ${psicologo.nombre} ${psicologo.apellidopaterno}</p>
         `,
         icon: 'question',
         showCancelButton: true,
@@ -94,12 +130,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
       if (result.isConfirmed) {
         const data = {
-          fecha: fecha,
+          fecha,
           horainicio: horaInicio,
           horafin: horaFin
         };
 
-        // Si la cita es hoy, marcamos como aceptada
+        // Si la cita es hoy, marcar como aceptada
         if (fecha === hoyISO) data.estado = 'aceptada';
 
         const resp = await fetch('/api/citas', {
@@ -116,8 +152,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             title: data.estado === 'aceptada' ? 'Ocupado' : 'Pendiente',
             start: `${fecha}T${horaInicio}`,
             end: `${fecha}T${horaFin}`,
-            backgroundColor: data.estado === 'aceptada' ? '#e74c3c' : '#f1c40f',
-            borderColor: data.estado === 'aceptada' ? '#e74c3c' : '#f1c40f',
+            classNames: [data.estado === 'aceptada' ? 'cita-aceptada' : 'cita-pendiente'],
             editable: false
           });
         } else {

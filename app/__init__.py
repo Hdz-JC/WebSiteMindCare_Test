@@ -15,6 +15,10 @@ def create_app():
     from .controllers.public.citas_routes import citas_bp
     app.register_blueprint(citas_bp)
 
+    # Registro de blueprints
+    from .controllers.public.psicologo_routes import psicologo_bp
+    app.register_blueprint(psicologo_bp)
+
 
     # --- Before request: cargar usuario logueado ---
     @app.before_request

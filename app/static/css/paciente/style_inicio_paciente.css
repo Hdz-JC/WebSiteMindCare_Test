@@ -228,6 +228,36 @@ h1
   }
 }
 
+/* === Colores de estado de citas === */
+
+/* Cita pendiente (amarillo) */
+.cita-pendiente {
+  background-color: #FACC15 !important;
+  border-color: #EAB308 !important;
+  color: #000 !important;
+}
+
+/* Cita aceptada (verde) */
+.cita-aceptada {
+  background-color: #22C55E !important;
+  border-color: #16A34A !important;
+  color: #fff !important;
+}
+
+/* Cita cancelada (rojo) */
+.cita-cancelada {
+  background-color: #EF4444 !important;
+  border-color: #DC2626 !important;
+  color: #fff !important;
+}
+
+/* Cita de otro usuario (ocupado - azul) */
+.cita-ocupada {
+  background-color: #3B82F6 !important;
+  border-color: #2563EB !important;
+  color: #fff !important;
+}
+
 
 
 
