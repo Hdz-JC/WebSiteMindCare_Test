@@ -73,8 +73,12 @@ const eventos = citas.map(c => {
     buttonText: { today: 'Hoy' },
     events: eventos,
 
-    validRange: { start: hoyISO }, // No permite días pasados
-
+    validRange: function(nowDate) {
+      return {
+        start: new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate()),
+      };
+    },
+    
     dayCellDidMount: function (info) {
       const day = info.date.getDay();
       const isToday = info.date.toDateString() === hoy.toDateString();
