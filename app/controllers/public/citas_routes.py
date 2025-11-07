@@ -29,5 +29,3 @@ def agendar_cita():
     status = 200 if "error" not in result else 400
     return jsonify(result), status
 
-
-

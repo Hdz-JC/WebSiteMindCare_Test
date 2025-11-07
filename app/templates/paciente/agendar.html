@@ -22,6 +22,11 @@
       <span>Regresar</span>
     </a>
     <h1>¿Que día te gustaría agendar?</h1>
+    <div class="historial">
+      <a id="verHistorial" href="#" style="color:teal; font-size:18px; cursor:pointer; text-decoration: underline;">
+        Ver historial de citas
+      </a>
+    </div>
     <div class="leyendas">
       <div class="leyenda-item disponible">
         <span class="cuadro"></span> Lugar disponible
@@ -33,10 +38,11 @@
         <span class="cuadro"></span> Día inhabil
       </div>
       <div class="leyenda-item hoy">
-        <span class="cuadro"></span> Día de noy
+        <span class="cuadro"></span> Día de hoy
       </div>
     </div>
   </div>
 
   <div id='calendar'></div>
+  <script src="{{ url_for('static', filename='js/paciente/agendar.js') }}"></script>
 {% endblock %}

@@ -33,6 +33,12 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 }
 
+document.getElementById('verHistorial').addEventListener('click', () => {
+  const userId = document.getElementById('user_id').value;
+  window.location.href = `/historial/${userId}`;
+});
+
+
 
 // Convertir citas en eventos para el calendario
 const eventos = citas.map(c => {

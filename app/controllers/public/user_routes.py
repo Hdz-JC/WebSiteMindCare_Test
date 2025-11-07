@@ -4,7 +4,9 @@ from app.validators.user_validator import UserValidator
 
 # Importaciones CORRECTAS para los servicios
 from app.services.impl.user_service_impl import UserServiceImpl
+from app.services.impl.citas_service_impl import CitaServiceImpl
 from app.services.auth.auth_service import AuthService
+cita_service = CitaServiceImpl()
 # Para el rol en el registro
 
 from app.utils.decorator import login_required
@@ -169,3 +171,21 @@ def registro():
     if request.is_json:
         return jsonify({'message': 'Método GET no permitido para registro'}), 405
     return render_template('public/registro.html')
+
+@user_bp.route('/historial')
+@login_required
+def historial():
+    user_id = request.args.get("user_id", g.user.id)
+    return render_template('paciente/historial.html', user=g.user)
+
+
+@user_bp.route('/api/historial/<int:user_id>', methods=['GET'])
+@login_required
+def obtener_historial(user_id):
+    data = cita_service.obtener_historial(user_id)
+    return jsonify(data)
+
+@user_bp.route('/historial/<int:user_id>')
+def historial_page(user_id):
+    citas = cita_service.obtener_historial(user_id)
+    return render_template('paciente/historial.html', citas=citas)

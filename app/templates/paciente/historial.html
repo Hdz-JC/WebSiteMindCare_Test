@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Historial de Citas{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/paciente/style_inicio_paciente.css') }}">
+<style>
+  /* Ajuste para que el título no quede cubierto */
+  .back {
+    margin-top: 120px; /* separa del banner superior */
+    text-align: center;
+  }
+
+  .back a {
+    position: absolute;
+    left: 40px;
+    top: 130px;
+    text-decoration: none;
+    color: teal;
+    display: flex;
+    align-items: center;
+  }
+
+  .back a img {
+    width: 25px;
+    margin-right: 8px;
+  }
+
+  .back h1 {
+    color: #004d4d;
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+
+  .tabla-citas {
+    width: 85%;
+    margin: 0 auto 50px auto;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+  }
+
+  thead {
+    background-color: teal;
+    color: white;
+  }
+
+  th, td {
+    padding: 14px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+
+  tbody tr:hover {
+    background-color: #f2f2f2;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="back">
+  <a href="{{ url_for('user_bp.agendar') }}">
+    <img src="{{ url_for('static', filename='img/back.png') }}">
+    <span>Regresar a Agenda</span>
+  </a>
+  <h1>Historial de Citas</h1>
+</div>
+
+<div class="tabla-citas">
+  <table>
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Hora Inicio</th>
+        <th>Hora Fin</th>
+        <th>Psicólogo</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cita in citas %}
+      <tr>
+        <td>{{ cita.fecha }}</td>
+        <td>{{ cita.horainicio }}</td>
+        <td>{{ cita.horafin }}</td>
+        <td>{{ cita.psicologo_nombre if cita.psicologo_nombre else 'No asignado' }}</td>
+        <td>{{ cita.estado|capitalize }}</td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="5">No hay citas registradas</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
