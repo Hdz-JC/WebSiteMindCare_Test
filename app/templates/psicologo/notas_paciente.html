@@ -1,0 +1,25 @@
+{% block style %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/psicologo/style_notas_paciente.css') }}">
+{% endblock%}
+
+{% block title %} Notas {% endblock %}
+
+  {% extends 'base.html' %}
+
+  {% block content %}
+  <div class="content">
+    <div class="info_paciente">
+        <h2>Datos del paciente</h2>
+        <h4>Nombre:</h4>
+        <h4>Apellido paterno:</h4>
+        <h4>Apellido materno:</h4>
+        <h4>Fecha:</h4>
+        <h4>Hora:</h4>
+    </div>
+    <div class="notas_paciente">
+        <h2>Notas</h2>
+        <textarea></textarea>
+        <button>Guardar</button>
+    </div>
+  </div>
+  {% endblock %}

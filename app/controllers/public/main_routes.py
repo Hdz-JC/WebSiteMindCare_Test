@@ -7,8 +7,8 @@ main_bp = Blueprint ('main_bp',__name__)
 
 #Rutas para archivos principales
 @main_bp.route('/')
-def inicio_paciente():
-    return render_template('paciente/inicio_paciente.html')
+def notas_paciente():
+    return render_template('psicologo/notas_paciente.html')
 
 @main_bp.route('/inicio')
 def inicio():
