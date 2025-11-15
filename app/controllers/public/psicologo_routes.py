@@ -1,19 +1,13 @@
-from flask import Blueprint, jsonify
-from app.services.impl.psicologo_service_impl import PsicologoServiceImpl
+from flask import Blueprint, render_template, session, redirect, url_for
+from app.utils.decorator import login_required
 
-psicologo_bp = Blueprint('psicologo_bp', __name__)
-psicologo_service = PsicologoServiceImpl()
+psicologo_bp = Blueprint('psicologo_bp', __name__, url_prefix='/psicologo')
 
-@psicologo_bp.route('/api/psicologo', methods=['GET'])
-def obtener_psicologo():
-    """Devuelve el primer psicólogo disponible"""
-    data = psicologo_service.obtener_psicologo()
-    status = 200 if "error" not in data else 404
-    return jsonify(data), status
+@psicologo_bp.route('/inicio')
+@login_required
+def inicio_psicologo():
+    # Validar que el usuario sea psicólogo
+    if session.get('user_rol') != 'psicologo':
+        return redirect(url_for('user_bp.inicio'))
 
-@psicologo_bp.route('/api/psicologos', methods=['GET'])
-def listar_psicologos():
-    """Devuelve la lista completa de psicólogos"""
-    data = psicologo_service.listar_psicologos()
-    status = 200 if "error" not in data else 400
-    return jsonify(data), status
+    return render_template('psicologo/inicio_psicologo.html', rol='psicologo')

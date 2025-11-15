@@ -61,6 +61,7 @@ def login():
             session['user_id'] = user.id
             session['user_email'] = user.email
             session['user_nombre'] = user.nombre
+            session['user_rol'] = user.rol.value
 
             if request.is_json:
                 return jsonify({
@@ -73,7 +74,12 @@ def login():
                 }), 200
 
             flash('Inicio de sesión exitoso', 'success')
-            return redirect(url_for('user_bp.inicio'))
+            
+            # Redirigir según el rol del usuario
+            if user.rol.value == 'psicologo':
+                return redirect(url_for('psicologo_bp.inicio_psicologo'))
+            else:  # paciente
+                return redirect(url_for('user_bp.inicio'))
         else:
             if request.is_json:
                 return jsonify({'error': 'Correo o contraseña incorrectos'}), 401
