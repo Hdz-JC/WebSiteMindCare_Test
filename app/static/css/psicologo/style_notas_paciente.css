@@ -1,6 +1,7 @@
 body
 {
   font-family: "Nunito", sans-serif;
+  margin-top: 100px;
 }
 
 .content
@@ -9,13 +10,7 @@ body
   align-items: center;
   align-items: flex-start;
   margin-left: 12%;
-  gap: 12rem;
-}
-
-.info_paciente, .notas_paciente
-{
-  margin-top: 4rem;
-  border-radius: 10px;
+  gap: 10rem;
 }
 
 .notas_paciente
@@ -27,20 +22,39 @@ body
   height: 500px;
 }
 
+.label, .valor {
+  display: inline-block;
+  color: black;
+  margin-right: 8px;
+}
+
+.label
+{
+  color: teal;
+}
+
 h2
 {
   color: #00abb5;
 }
 
+.btn
+{
+  display: flex;
+  gap: 5rem;
+  padding: 210px 0px 0px 0px;
+  text-decoration: none;
+  border: none;
+}
+
 button 
 {
-  padding: 10px 20px;
+  padding: 10px 30px;
   border: none;
   border-radius: 4px;
   background-color: #00abb5;
   color: white;
   cursor: pointer;
-  align-self: flex-end;
 }
 
 textarea

@@ -7,5 +7,43 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Bienvenido, Psicólogo</h1>
+    <div class="message">
+        {% if citas_hoy %}
+            <h1>Citas para hoy {{ citas_hoy[0].fecha.strftime('%d/%b/%Y') }}</h1>
+        {% else %}
+            <h1>No hay citas para hoy</h1>
+        {% endif %}
+    </div>
+    <div class="tabla-citas">
+    {% if citas_hoy and citas_hoy|length > 0 %}
+        <table class="citas_hoy">
+            <thead>
+                <tr>
+                    <th>Hora inicio</th>
+                    <th>Hora fin</th>
+                    <th>Paciente</th>
+                    <th>Estado</th>
+                    <th>Tomar nota</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in citas_hoy %}
+                <tr>
+                    <td>{{ cita.horainicio or '-' }}</td>
+                    <td>{{ cita.horafin or '-' }}</td>
+                    <td>{{ cita.paciente or '-' }}</td>
+                    <td>{{ cita.estado|capitalize }}</td>
+                    <td>
+                        <a href="{{ url_for('psicologo_bp.notas_paciente', idcita=cita.id) }}">
+                            <img src="{{ url_for('static', filename='img/nota.png') }}">
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p>No hay citas para hoy</p>
+    {% endif %}
 {% endblock %}
