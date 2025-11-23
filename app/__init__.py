@@ -19,6 +19,9 @@ def create_app():
     from .controllers.public.psicologo_routes import psicologo_bp
     app.register_blueprint(psicologo_bp)
 
+    from .controllers.public.notas_routes import notas_bp
+    app.register_blueprint(notas_bp)
+
 
     # --- Before request: cargar usuario logueado ---
     @app.before_request

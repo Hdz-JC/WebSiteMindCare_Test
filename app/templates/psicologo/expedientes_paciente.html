@@ -7,5 +7,33 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Vista para los expedientes de los pacientes</h1>
+
+<h1>Expedientes de Pacientes</h1>
+
+<form method="get" class="filtro-paciente">
+    <label for="email">Filtrar por email:</label>
+    <input type="email" name="email" id="email" placeholder="correo@ejemplo.com" value="{{ request.args.get('email','') }}">
+    <button type="submit">Filtrar</button>
+</form>
+
+{% for expediente in expedientes %}
+  <div class="expediente">
+    <h2>Paciente: {{ expediente.usuario.nombre }} {{ expediente.usuario.paterno }} {{ expediente.usuario.materno }}</h2>
+    
+    {% if expediente.nota %}
+      <ul>
+      {% for nota in expediente.nota %}
+        <li>
+          <strong>{{ nota.fechanota.strftime('%d/%m/%Y') }}</strong> - 
+          <em>{{ nota.titulo }}</em>: 
+          {{ nota.descripcionnota }}
+        </li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p>No hay notas registradas.</p>
+    {% endif %}
+  </div>
+{% endfor %}
+
 {% endblock %}

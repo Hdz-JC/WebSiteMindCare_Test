@@ -2,8 +2,10 @@ from flask import Blueprint, render_template, request, session, redirect, url_fo
 from app.services.impl.psicologo_service_impl import PsicologoServiceImpl
 from app.utils.decorator import login_required
 from datetime import date, datetime, timezone
-from app.models import Cita, User
+from app.models import Cita, User,Expediente,db
 from sqlalchemy import or_
+
+
 
 psicologo_bp = Blueprint('psicologo_bp', __name__)
 psicologo_service = PsicologoServiceImpl()
@@ -57,7 +59,14 @@ def expedientes():
     if session.get('user_rol') != 'psicologo':
         return redirect(url_for('user_bp.inicio'))
     
-    return render_template('psicologo/expedientes_paciente.html', rol='psicologo')
+    expedientes = (
+        db.session.query(Expediente)
+        .join(User)
+        .all()
+    )
+
+    return render_template('psicologo/expedientes_paciente.html', rol='psicologo',expedientes=expedientes)
+
 
 @psicologo_bp.route('/notas', methods=['GET', 'POST'])
 @login_required
@@ -75,3 +84,5 @@ def notas_paciente():
     paciente = User.query.get(cita.fkidusuario)
 
     return render_template('psicologo/notas_paciente.html', rol='psicologo', cita=cita, paciente=paciente)
+
+

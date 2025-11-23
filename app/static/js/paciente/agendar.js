@@ -102,11 +102,13 @@ const eventos = citas.map(c => {
       });
 
       // Validaciones
+      /*
       const dia = info.date.getDay();
       if (dia === 0 || dia === 6) {
         Swal.fire('Día inhábil', 'No puedes agendar en fines de semana.', 'warning');
         return;
       }
+      */
 
       const fechaClick = new Date(fecha);
       if (fechaClick < new Date(hoyISO)) {

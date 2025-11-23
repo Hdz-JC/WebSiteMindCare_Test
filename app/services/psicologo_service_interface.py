@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-
 class PsicologoService(ABC):
     
     @abstractmethod

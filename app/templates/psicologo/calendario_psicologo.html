@@ -1,0 +1,35 @@
+<!-- IMPORTAR FULLCALENDAR -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{% block style %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/psicologo/style_calendario_psicologo.css') }}">
+{% endblock %}
+
+{% block title %} Calendario Psicólogo {% endblock %}
+{% extends 'base.html' %}
+
+{% block content %}
+<input type="hidden" id="user_id" value="{{ user.id }}">
+<input type="hidden" id="user_rol" value="{{ user.rol }}">
+
+<div class="back">
+  <a href="{{ url_for('user_bp.inicio') }}">
+    <img src="{{ url_for('static', filename='img/back.png') }}">
+    <span>Regresar</span>
+  </a>
+
+  <h1>Calendario de Citas — Psicólogo</h1>
+
+  <p style="font-size:18px; color:#444; margin-top:10px;">
+    Aquí puedes visualizar todas las citas agendadas.  
+    <br><strong>La función de agendar está deshabilitada.</strong>
+  </p>
+</div>
+
+<div id="calendar"></div>
+
+<!-- JS exclusivo del psicólogo (solo visualiza) -->
+<script src="{{ url_for('static', filename='js/psicologo/calendario.js') }}"></script>
+
+{% endblock %}

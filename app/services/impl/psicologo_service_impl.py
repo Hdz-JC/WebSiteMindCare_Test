@@ -21,3 +21,4 @@ class PsicologoServiceImpl(PsicologoService):
         except Exception as e:
             return {"error": f"Error al obtener psicólogo: {str(e)}"}
 
+    

@@ -1,5 +1,5 @@
 from app.models import db
-from datetime import datetime
+from datetime import datetime,timezone
 from sqlalchemy import Enum
 import enum
 
@@ -22,4 +22,7 @@ class User(db.Model):
     email = db.Column(db.String(254), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
     rol = db.Column(db.Enum(RoleEnum), default=RoleEnum.paciente, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+
+    # Relación
+    expediente = db.relationship("Expediente", back_populates="usuario", uselist=False)
