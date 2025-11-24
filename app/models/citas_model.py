@@ -23,3 +23,16 @@ class Cita(db.Model):
     enviorecordatorio = db.Column(db.Boolean, default=False)
     fecharecordatorio = db.Column(db.DateTime)
     descripcioncancelado = db.Column(db.String(255))
+
+    # RELACIONES ---------------------------
+    usuario = db.relationship(
+        "User",
+        foreign_keys=[fkidusuario],
+        backref="citas_paciente"
+    )
+
+    psicologo = db.relationship(
+        "User",
+        foreign_keys=[fkidpsicologo],
+        backref="citas_psicologo"
+    )

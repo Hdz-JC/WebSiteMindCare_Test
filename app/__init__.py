@@ -3,10 +3,21 @@ from .config import Config
 from app.models import db
 from app.models.user_model import User  # Importa tu modelo
 
+
+# ------------- IMPORTAR MODULO DE CORREO -------------
+from flask_mail import Mail
+mail = Mail()
+# ------------------------------------------------------
+
 def create_app():
     app = Flask(__name__) 
     app.config.from_object(Config)
+
+    # Inicializar DB
     db.init_app(app)
+
+    # Inicializar Mail
+    mail.init_app(app)
 
     # --- Rutas / Blueprints ---
     from .controllers.public.user_routes import user_bp
@@ -19,6 +30,11 @@ def create_app():
     from .controllers.public.psicologo_routes import psicologo_bp
     app.register_blueprint(psicologo_bp)
 
+    # --- Blueprint para correos ---
+    from .controllers.public.mail_routes import mail_bp
+    app.register_blueprint(mail_bp)
+
+    # -----------------------------------------------------
 
     # --- Before request: cargar usuario logueado ---
     @app.before_request
