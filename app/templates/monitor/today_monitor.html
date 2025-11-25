@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block title %}Monitor - Pacientes Hoy{% endblock %}
+
+{% block style %}
+<style>
+  .monitor-container {
+    max-width: 900px;
+    margin: 1.5rem auto;
+    padding: 1rem;
+  }
+  h1 { color: #00ABB5; text-align: center;margin-top: 100px; margin-bottom: 0.2rem; }
+  .sub { text-align:center; color: #666; margin-bottom: 1rem; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Nunito", sans-serif;
+  }
+  th, td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e6e6e6;
+    text-align: left;
+  }
+  th { color: #005f61; text-transform: uppercase; font-size: 0.8rem; }
+  tr:hover { background: #f7f7f7; }
+  .resaltado {
+    background: #FFF7C2; /* amarillo suave */
+    font-weight: 700;
+  }
+  .hora {
+    font-family: monospace;
+    color: #333;
+  }
+  .empty {
+    text-align: center;
+    padding: 2rem;
+    color: #777;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    th:nth-child(3), td:nth-child(3) { display:none; } /* opcional */
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="monitor-container">
+  <h1>Pacientes - Día de hoy</h1>
+  <div class="sub">Fecha: {{ hoy }}</div>
+
+  {% if usuarios|length == 0 %}
+    <div class="empty">No hay citas para hoy.</div>
+  {% else %}
+    <table id="monitor-table" role="table" aria-label="Citas de hoy">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Hora Inicio</th>
+          <th>Hora Fin</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in usuarios %}
+        <tr data-inicio="{{ u.hora_inicio }}" data-fin="{{ u.hora_fin }}">
+          <td>{{ u.nombre }}</td>
+          <td class="hora">{{ u.hora_inicio }}</td>
+          <td class="hora">{{ u.hora_fin }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</div>
+
+<script>
+  // Resalta la fila que está en curso y actualiza cada 30s (tanto visual como por API)
+  function resaltarFilaActual() {
+    const ahora = new Date();
+    const horaActual = ahora.getHours().toString().padStart(2, '0') + ":" + ahora.getMinutes().toString().padStart(2, '0');
+
+    document.querySelectorAll("#monitor-table tbody tr").forEach(fila => {
+      const inicio = fila.dataset.inicio;
+      const fin = fila.dataset.fin;
+      if (!inicio || !fin) return;
+
+      if (horaActual >= inicio && horaActual < fin) {
+        fila.classList.add("resaltado");
+      } else {
+        fila.classList.remove("resaltado");
+      }
+    });
+  }
+
+  async function fetchYActualizar() {
+    try {
+      const res = await fetch("/api/monitor/today");
+      if (!res.ok) return;
+      const data = await res.json();
+
+      const tbody = document.querySelector("#monitor-table tbody");
+      if (!tbody) return;
+
+      // Reconstruir filas
+      tbody.innerHTML = "";
+      data.forEach(u => {
+        const tr = document.createElement("tr");
+        tr.dataset.inicio = u.hora_inicio;
+        tr.dataset.fin = u.hora_fin;
+        tr.innerHTML = `<td>${u.nombre}</td><td class="hora">${u.hora_inicio}</td><td class="hora">${u.hora_fin}</td>`;
+        tbody.appendChild(tr);
+      });
+
+      // aplicar resaltado una vez actualizado
+      resaltarFilaActual();
+    } catch (e) {
+      console.error("Error actualizando monitor:", e);
+    }
+  }
+
+  // Ejecutar al cargar
+  resaltarFilaActual();
+  // Actualizar resaltado cada minuto
+  setInterval(resaltarFilaActual, 60 * 1000);
+
+  // Hacer polling al servidor cada 30s para traer nuevas citas
+  setInterval(fetchYActualizar, 30 * 1000);
+</script>
+{% endblock %}

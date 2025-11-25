@@ -17,19 +17,21 @@
         <h4><span class="label">Fecha:</span><span class="valor">{{ cita.fecha.strftime('%d/%b/%Y') }}</span></h4>
         <h4><span class="label">Hora:</span><span class="valor">{{ cita.horainicio.strftime('%H:%M') }} - {{ cita.horafin.strftime('%H:%M') }}</span></h4>
       </div>
-      <div class="btn">
-        <a href="{{ url_for('psicologo_bp.inicio_psicologo') }}">
-          <button id="regresar">Regresar</button>
-        </a>
-      </div>
+     
   </div>
 
   <div class="notas_paciente">
     <form id="form-nota" method="post">
       <h2>Agregar Nota</h2>
-      <input type="text" name="titulo" placeholder="Título de la nota" required />
-      <textarea name="contenido" placeholder="Escribe tus observaciones aquí..." required></textarea>
-      <button type="submit" class="btn" data-cita-id="{{ cita.idcita }}">Guardar</button>
+      <input type="text" name="titulo" placeholder="Título de la nota" pattern="^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$" title="Solo letras"  required  />
+      <textarea name="contenido" placeholder="Escribe tus observaciones aquí..." pattern="^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$" title="Solo letras" required></textarea>
+      <button hidden type="submit" class="btn" data-cita-id="{{ cita.idcita }}">Guardar</button>
+      <div class="btn">
+        <a href="{{ url_for('psicologo_bp.inicio_psicologo') }}">
+          <button id="regresar">Regresar</button>
+        </a>
+        <button type="submit" data-cita-id="{{ cita.idcita }}">Guardar</button>
+      </div>
     </form>
   </div>
 </div>

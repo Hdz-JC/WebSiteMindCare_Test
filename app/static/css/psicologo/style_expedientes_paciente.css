@@ -1,53 +1,50 @@
 body {
     font-family: "Nunito", sans-serif;
-    margin-top: 80px; /* Separar el contenido del header/nav */
+    margin-top: 80px;
 }
-
 h1 {
-    color: #00abb5;
-    margin-bottom: 30px; /* Evitar que se pegue al primer expediente */
+    color: #00ABB5;
+    margin-bottom: 30px;
     text-align: center;
 }
-
-.expediente {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
+h4 {
+    color: #00ABB5;
+    margin: 10px;
 }
-
-.expediente h2 {
-    margin-top: 0;
-    color: #007f85;
+.valor {
+    color: #333;
 }
-
+.expediente
+{
+    width: 85%;
+    margin: 0 auto 50px auto;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
 .expediente ul {
     list-style-type: disc;
-    padding-left: 20px;
+    margin-left: 20px;
 }
-
 .expediente li {
     margin-bottom: 10px;
 }
-
 .filtro-paciente {
     margin-bottom: 20px;
     text-align: center;
 }
-
 .filtro-paciente input[type="email"] {
     padding: 8px;
     width: 250px;
     border-radius: 4px;
     border: 1px solid #ccc;
 }
-
 .filtro-paciente button {
     padding: 8px 15px;
     border-radius: 4px;
     border: none;
-    background-color: #00abb5;
+    background-color: #00ABB5;
     color: white;
     cursor: pointer;
 }

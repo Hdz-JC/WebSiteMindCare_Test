@@ -11,9 +11,10 @@
         {% if citas_hoy %}
             <h1>Citas para hoy {{ citas_hoy[0].fecha.strftime('%d/%b/%Y') }}</h1>
         {% else %}
-            <h1>No hay citas para hoy</h1>
+            <h1>Agenda de hoy</h1>
         {% endif %}
     </div>
+
     <div class="tabla-citas">
     {% if citas_hoy and citas_hoy|length > 0 %}
         <table class="citas_hoy">
@@ -23,27 +24,118 @@
                     <th>Hora fin</th>
                     <th>Paciente</th>
                     <th>Estado</th>
-                    <th>Tomar nota</th>
+                    <th>Acción</th>
                 </tr>
             </thead>
             <tbody>
                 {% for cita in citas_hoy %}
+                {% if cita.estado != 'cancelada' and 'DIA_INHABIL' not in (cita.descripcioncancelado or '') and cita.paciente != 'Psicólogo (Bloqueo)' %}
                 <tr>
                     <td>{{ cita.horainicio or '-' }}</td>
                     <td>{{ cita.horafin or '-' }}</td>
                     <td>{{ cita.paciente or '-' }}</td>
                     <td>{{ cita.estado|capitalize }}</td>
                     <td>
-                        <a href="{{ url_for('psicologo_bp.notas_paciente', idcita=cita.id) }}">
-                            <img src="{{ url_for('static', filename='img/nota.png') }}">
+                        <a href="{{ url_for('psicologo_bp.notas_paciente', idcita=cita.id) }}" title="Tomar Nota">
+                            <img src="{{ url_for('static', filename='img/nota.png') }}" alt="Notas" style="width: 24px;">
                         </a>
                     </td>
                 </tr>
+                {% endif %}
                 {% endfor %}
             </tbody>
         </table>
-    </div>
     {% else %}
-        <p>No hay citas para hoy</p>
+        <p style="text-align: center; margin-top: 20px;">No tienes citas programadas para hoy.</p>
     {% endif %}
+    </div>
+
+    <div class="gestion-dias">
+        <h2 class="gestion-header">📅 Bloquear Día Inhábil</h2>
+        <p>
+            Selecciona una fecha para marcarla como <b>no laborable</b>. 
+            <br>
+            <small>⚠️ Advertencia: Al bloquear un día, el sistema <b>cancelará automáticamente</b> todas las citas de pacientes existentes para esa fecha y enviará las notificaciones correspondientes.</small>
+        </p>
+        
+        <div class="input-group-bloqueo">
+            <label for="fechaBloqueo">Fecha a bloquear:</label>
+            <input type="date" id="fechaBloqueo" class="form-control" style="padding: 8px;">
+            
+            <button class="btn-bloquear" onclick="bloquearDia()">
+                Confirmar Bloqueo
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        async function bloquearDia() {
+            const fechaInput = document.getElementById('fechaBloqueo');
+            const fecha = fechaInput.value;
+
+            if (!fecha) {
+                Swal.fire('Campo vacío', 'Por favor selecciona una fecha para bloquear.', 'warning');
+                return;
+            }
+
+            // Confirmación de seguridad
+            const result = await Swal.fire({
+                title: '¿Estás seguro?',
+                html: `Vas a bloquear el día <b>${fecha}</b>.<br>Se cancelarán las citas activas de ese día.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#c0392b',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, bloquear día',
+                cancelButtonText: 'Cancelar'
+            });
+
+            if (result.isConfirmed) {
+                try {
+                    // Generamos la URL con Jinja
+                    const url = "{{ url_for('psicologo_bp.bloquear_dia') }}";
+
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                            // He eliminado la línea de CSRF que causaba el error
+                        },
+                        body: JSON.stringify({ fecha: fecha })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        Swal.fire(
+                            '¡Bloqueado!', 
+                            `${data.message}. Se cancelaron ${data.canceladas || 0} citas.`, 
+                            'success'
+                        ).then(() => {
+                            // Si bloqueamos hoy, recargamos. Si es otro día, limpiamos.
+                            const hoyISO = new Date().toISOString().split('T')[0];
+                            if (fecha === hoyISO) {
+                                location.reload();
+                            } else {
+                                fechaInput.value = '';
+                            }
+                        });
+                    } else {
+                        Swal.fire('Error', data.error || 'No se pudo bloquear el día', 'error');
+                    }
+
+                } catch (error) {
+                    console.error(error);
+                    Swal.fire('Error', 'Hubo un problema de conexión con el servidor.', 'error');
+                }
+            }
+        }
+        
+        // Script para establecer la fecha mínima como "HOY" automáticamente
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('fechaBloqueo').setAttribute('min', today);
+        });
+    </script>
 {% endblock %}

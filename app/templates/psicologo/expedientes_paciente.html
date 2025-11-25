@@ -1,31 +1,25 @@
 {% extends 'base.html' %}
-
 {% block title %}Expedientes{% endblock %}
-
 {% block style %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/psicologo/style_expedientes_paciente.css') }}">
 {% endblock %}
-
 {% block content %}
-
 <h1>Expedientes de Pacientes</h1>
-
 <form method="get" class="filtro-paciente">
     <label for="email">Filtrar por email:</label>
-    <input type="email" name="email" id="email" placeholder="correo@ejemplo.com" value="{{ request.args.get('email','') }}">
+    <input type="email" name="email" id="email" placeholder="correo@ejemplo.com" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
+  title="Ingresa un correo válido"  value="{{ request.args.get('email','') }}">
     <button type="submit">Filtrar</button>
 </form>
-
 {% for expediente in expedientes %}
   <div class="expediente">
-    <h2>Paciente: {{ expediente.usuario.nombre }} {{ expediente.usuario.paterno }} {{ expediente.usuario.materno }}</h2>
-    
+    <h4><span class="label">Paciente: </span><span class="valor">{{ expediente.usuario.nombre }} {{ expediente.usuario.paterno }} {{ expediente.usuario.materno }}</span></h4>
     {% if expediente.nota %}
       <ul>
       {% for nota in expediente.nota %}
         <li>
-          <strong>{{ nota.fechanota.strftime('%d/%m/%Y') }}</strong> - 
-          <em>{{ nota.titulo }}</em>: 
+          <strong>{{ nota.fechanota.strftime('%d/%m/%Y') }}</strong> -
+          <em>{{ nota.titulo }}</em>:
           {{ nota.descripcionnota }}
         </li>
       {% endfor %}
@@ -35,5 +29,4 @@
     {% endif %}
   </div>
 {% endfor %}
-
 {% endblock %}

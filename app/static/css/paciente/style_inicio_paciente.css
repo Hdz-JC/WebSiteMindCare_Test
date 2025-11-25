@@ -101,16 +101,25 @@ h1
   flex-wrap: wrap;
 }
 
-/* Corrige la altura de la última celda del calendario */
-/* === FIX: Última celda más grande === */
-.fc-timegrid-slot-lane:last-child {
-  height: 60px !important;
-  min-height: 60px !important;
+/* === SOLUCIÓN === */
+
+/* 1. Hace que el contenedor se ajuste a la altura real de las celdas */
+.fc-view-harness {
+    height: auto !important;
 }
 
-.fc-scroller-liquid-absolute {
-  height: auto !important;
+/* 2. Permite que el scroller crezca lo necesario sin estirar la última fila */
+.fc-scroller {
+    height: auto !important;
+    overflow: visible !important; /* Opcional: quita el scroll interno si quieres ver todo */
 }
+
+/* 3. Asegura que la tabla de fondo no intente llenar el 100% si no es necesario */
+.fc-timegrid-body, .fc-timegrid-slots table {
+    height: auto !important;
+}
+
+
 
 
 /* --- Responsividad --- */

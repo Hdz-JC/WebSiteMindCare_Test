@@ -7,17 +7,17 @@ POST http://127.0.0.1:5000/registro
 Content-Type: application/json
 
 {
-  "paterno": "Hdz",
-  "materno": "LP",
-  "nombre": "Jose",
+  "paterno": "monitor",
+  "materno": "monitor",
+  "nombre": "monitor",
   "edad":25,
   "fecha_nacimiento": "2000-2-17",
   "sexo": "F",
   "direccion": "Av. Central #123",
-  "celular": "1231231230",
-  "email": "jose@test.com",
-  "password": "jose12345",
-  "rol":"paciente"
+  "celular": "1231231221",
+  "email": "monitor@gmail.com",
+  "password": "monitor12345",
+  "rol":"general"
 }
 
 ### 🔐 Login

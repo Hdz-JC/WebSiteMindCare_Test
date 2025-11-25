@@ -55,3 +55,36 @@ img
     width: 30px;
     height: 30px;
 }
+
+.gestion-dias {
+        margin-top: 40px;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .gestion-header {
+        color: #c0392b; /* Rojo para indicar precaución */
+        margin-bottom: 10px;
+    }
+    .input-group-bloqueo {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .btn-bloquear {
+        background-color: #c0392b;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .btn-bloquear:hover {
+        background-color: #a93226;
+    }

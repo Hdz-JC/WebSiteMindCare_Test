@@ -1,6 +1,48 @@
-version: '3.8'
+
 
 services:
+  # --- NGINX (La Puerta de Entrada) ---
+  nginx:
+    image: nginx:alpine
+    container_name: mindcare_nginx
+    restart: always
+    ports:
+      - "80:80"  # Acceso público (http://tu-ip)
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - web
+
+  # --- TU APP FLASK (Oculta detrás de Nginx) ---
+  web:
+    build: .
+    container_name: mindcare_app
+    restart: always
+    expose:
+      - "5000"  # Solo visible para Nginx, NO para internet
+    environment:
+      - FLASK_APP=run.py
+      - FLASK_DEBUG=0
+      - SECRET_KEY=mind_care_project
+      
+      # Base de Datos
+      - DATABASE_URL=postgresql://user_postgres:password_postgres@db:5432/db_postgres
+      
+      # Correo
+      - SERVER_NAME=  # Vacío para la web
+      - DOMAIN_URL=localhost:80
+      - MAIL_SERVER=${MAIL_SERVER}
+      - MAIL_PORT=${MAIL_PORT}
+      - MAIL_USE_TLS=${MAIL_USE_TLS}
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      # 🟢 CAMBIO AQUÍ: Separamos Nombre y Correo
+      - MAIL_DEFAULT_SENDER_NAME=${MAIL_DEFAULT_SENDER_NAME}
+      - MAIL_DEFAULT_SENDER_EMAIL=${MAIL_DEFAULT_SENDER_EMAIL}
+    depends_on:
+      - db
+
+  # --- BASE DE DATOS ---
   db:
     image: postgres:16
     container_name: postgres_db
@@ -14,6 +56,7 @@ services:
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
 
+  # --- PGADMIN ---
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin

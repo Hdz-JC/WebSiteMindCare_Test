@@ -10,14 +10,28 @@ class CitaServiceImpl(CitaService):
     def agendar_cita(self, data):
         try:
             psicologo = User.query.filter_by(rol='psicologo').first()
+            if not psicologo:
+                return {"error": "No hay psicólogo registrado en el sistema"}
+
             hoy = date.today()
             fecha_cita = datetime.strptime(data["fecha"], "%Y-%m-%d").date()
 
+            # --- VALIDACIÓN DE DÍA BLOQUEADO (NUEVO) ---
+            # Buscamos si existe una cita donde el usuario sea el mismo psicólogo en esa fecha
+            dia_inhabil = Cita.query.filter(
+                Cita.fkidpsicologo == psicologo.id,
+                Cita.fkidusuario == psicologo.id, # Clave: El psicólogo es su propio paciente
+                Cita.fecha == fecha_cita,
+                Cita.estado != 'cancelada'        # Solo si el bloqueo está activo
+            ).first()
+
+            if dia_inhabil:
+                # Si encontramos el bloqueo, rechazamos la petición y devolvemos error
+                return {"error": "Lo sentimos, el psicólogo no labora el día seleccionado."}
+            # -------------------------------------------
+
             # Si la cita es hoy, cambia estado a 'aceptada', si no, 'pendiente'
             estado_cita = "aceptada" if fecha_cita == hoy else "pendiente"
-
-            if not psicologo:
-                return {"error": "No hay psicólogo registrado en el sistema"}
 
             nueva_cita = Cita(
                 fkidusuario=data["fkidusuario"],

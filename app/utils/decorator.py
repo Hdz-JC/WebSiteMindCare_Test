@@ -32,7 +32,7 @@ def role_required(required_roles):
                 return redirect(url_for('user.inicio'))
 
             # Asumiendo que g.user tiene un atributo 'role' que es una instancia de RoleEnum
-            if g.user.role.name not in [r.name if hasattr(r, 'name') else r for r in required_roles]:
+            if g.user.rol.name not in [r.name if hasattr(r, 'name') else r for r in required_roles]:
                 flash('No tienes permiso para acceder a esta página.', 'danger')
                 # O podrías redirigir a una página de "Acceso Denegado"
                 abort(403) # Lanza un error 403 Forbidden

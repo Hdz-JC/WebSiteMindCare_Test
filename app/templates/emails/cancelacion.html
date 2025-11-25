@@ -1,0 +1,20 @@
+{% extends "emails/base_status.html" %}
+
+{% block title %}Cita Cancelada{% endblock %}
+
+{% block extra_css %}
+<style>:root { --theme-color: #EF4444; /* Rojo Error */ }</style>
+{% endblock %}
+
+{% block icon %}❌{% endblock %}
+
+{% block heading %}Cita Cancelada{% endblock %}
+
+{% block content %}
+    <p>La cita ha sido cancelada correctamente.</p>
+    
+    <div class="details-box">
+        <p style="margin:5px 0">📅 <strong>Fecha original:</strong> {{ cita.fecha }}</p>
+        <p style="margin:5px 0">⏰ <strong>Hora:</strong> {{ cita.horainicio }}</p>
+    </div>
+{% endblock %}

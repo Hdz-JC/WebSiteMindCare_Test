@@ -17,3 +17,8 @@ __pycache__/
 .pytest_cache/
 
 postgres_data/
+
+#env
+.env
+
+.test_mail

@@ -1,0 +1,16 @@
+{% extends "emails/base_status.html" %}
+
+{% block title %}Enlace no disponible{% endblock %}
+
+{% block extra_css %}
+<style>:root { --theme-color: #F59E0B; /* Amarillo Advertencia */ }</style>
+{% endblock %}
+
+{% block icon %}⚠{% endblock %}
+
+{% block heading %}Enlace Expirado{% endblock %}
+
+{% block content %}
+    <p>Esta cita ya fue gestionada anteriormente o el enlace ya no es válido.</p>
+    <p>Por favor revisa tu historial en la aplicación.</p>
+{% endblock %}
