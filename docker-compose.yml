@@ -30,7 +30,7 @@ services:
       
       # Correo
       - SERVER_NAME=  # Vacío para la web
-      - DOMAIN_URL=localhost:80
+      - DOMAIN_URL=${DOMAIN_URL}
       - MAIL_SERVER=${MAIL_SERVER}
       - MAIL_PORT=${MAIL_PORT}
       - MAIL_USE_TLS=${MAIL_USE_TLS}
@@ -68,3 +68,5 @@ services:
       - "5050:80"
     depends_on:
       - db
+
+
